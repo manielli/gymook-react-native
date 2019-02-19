@@ -3,13 +3,13 @@ const BASE_URL = `http://192.168.1.50:3000/api/v1`;
 export const GymClass = {
     all() {
         return fetch(`${BASE_URL}/gym_classes`, {
-            credentials: "include"
+                credentials: "include"
             }
         ).then(res => res.json());
     },
     one(id) {
         return fetch(`${BASE_URL}/gym_classes/${id}`, {
-            credentials: "include"
+                credentials: "include"
             }
         ).then(res => res.json());
     },
@@ -21,6 +21,16 @@ export const GymClass = {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(params)
+            }
+        ).then(res => res.json());
+    },
+    destroy(id) {
+        return fetch(`${BASE_URL}/gym_classes/${id}`,{
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "include"
+                }
             }
         ).then(res => res.json());
     }
@@ -37,7 +47,7 @@ export const Occurence = {
         return fetch(`${BASE_URL}/occurences/${id}`, {
                 credentials: "include"
             }
-        ).then(res => res.json())
+        ).then(res => res.json());
     },
     create(params) {
         return fetch(`${BASE_URL}/occurences`, {
@@ -51,11 +61,14 @@ export const Occurence = {
         ).then(res => res.json());
     },
     destroy(id) {
-        return fetch(`${BASE_URL}/occurences`, {
+        return fetch(`${BASE_URL}/occurences/${id}`, {
                 method: "DELETE",
-                credentials: "include"
+                credentials: "include",
+                headers: {
+                    "Content-Type": "include"
+                }
             }
-        ).then(res => res.json())
+        ).then(res => res.json());
     }
 }
 
@@ -84,11 +97,14 @@ export const Booking = {
         ).then(res => res.json());
     },
     destroy(id) {
-        return fetch(`${BASE_URL}/bookings`, {
+        return fetch(`${BASE_URL}/bookings/${id}`, {
                 method: "DELETE",
-                credentials: "include"
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                }
             }
-        ).then(res => res.json())
+        ).then(res => res.json());
     }
 }
 
@@ -118,6 +134,6 @@ export const User = {
         return fetch(`${BASE_URL}/users/current`, {
                 credentials: "include"
             }
-        ).then(res => res.json())
+        ).then(res => res.json());
     }
 }
