@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal, ScrollView, View, TouchableOpacity, Text } from "react-native";
 import GymClassShowScreen from "./GymClassShowScreen";
 
-class GymClassIndexScreen extends Component {
+class GymClassIndexScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

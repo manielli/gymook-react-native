@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {ScrollView, View, Text, Button} from "react-native";
 
-class OccurenceShowScreen extends Component {
+class OccurenceShowScreen extends React.Component {
     constructor(props) {
         super(props);
 

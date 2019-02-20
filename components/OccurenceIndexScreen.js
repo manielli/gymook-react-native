@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Button,Modal,ScrollView,View,TouchableOpacity,Text} from "react-native";
 import OccurenceShowScreen from "./OccurenceShowScreen";
 
-class OccurenceIndexScreen extends Component {
+class OccurenceIndexScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
