@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from "expo";
-import Title from "./components/Title";
+// import Title from "./components/Title";
 // import GymClassIndexScreen from "./components/GymClassIndexScreen";
 // import OccurenceIndexScreen from "./components/OccurenceIndexScreen";
 import SignInPage from "./components/SignInPage";
 import { User } from './requests';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -19,6 +20,8 @@ export default class App extends React.Component {
     this.destroySession = this.destroySession.bind(this);
   }
 
+
+
   destroySession() {
     this.setState({
       currentUser: null
@@ -29,14 +32,15 @@ export default class App extends React.Component {
 
   getCurrentUser() {
     User
-      .current().then(data => {
+      .current()
+      .then(data => {
         const {current_user: currentUser} = data;
-
         if (currentUser) {
           this.setState({currentUser});
         }
-        this.state({loading: false});
-      });
+        this.setState({loading: false});
+        }
+      );
   }
 
   componentDidMount() {
@@ -49,17 +53,13 @@ export default class App extends React.Component {
 
       <View style={{flex: 1}} >
         <LinearGradient 
-          style={{
-            flex: 1, 
-            alignItems: "center"
-          }} 
+          style={styles.container} 
           colors={["white", "steelblue", "maroon"]} 
         >
-          <Title>Gymook</Title>
           
           {/* <GymClassIndexScreen /> */}
           {/* <OccurenceIndexScreen /> */}
-          <SignInPage onSignIn={this.getCurrentUser} />
+          {/* <SignInPage onSignIn={this.getCurrentUser} /> */}
         </LinearGradient>
       </View>
     );
@@ -69,7 +69,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -33,16 +33,17 @@ class OccurenceShowScreen extends React.Component {
 
     render() {
         const {occurence, loading} = this.state;
+        console.log(this.state);
         return (
             <ScrollView>
                 { 
-                    loading ? (
+                    loading || !occurence ? (
                         <Text>Loading...</Text>
                     ) : (
                         <>
-                            <Text style={{ fontSize: 10, marginBottom: 10 }} > This class starts at: {occurence.start_time}</Text>
-                            <Text style={{ fontSize: 10, marginBottom: 10 }} > ends at: {occurence.end_time} </Text>
-                            <Text style={{ fontSize: 10, fontWeight: "bold" }} > Coach {occurence.creator_coach.full_name} will be teachin this class. </Text>
+                            <Text style={{ fontSize: 30, marginBottom: 10 }} > This class starts at: {occurence.start_time}</Text>
+                            <Text style={{ fontSize: 30, marginBottom: 10 }} > ends at: {occurence.end_time} </Text>
+                            <Text style={{ fontSize: 30, fontWeight: "bold" }} > Coach {occurence.creator_coach.full_name} will be teachin this class. </Text>
                         </>
                     )
                 }

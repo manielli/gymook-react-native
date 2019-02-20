@@ -7,7 +7,8 @@ const Title = props => (
         fontSize: 40, 
         color: "steelblue", 
         fontWeight: "bold"
-    }}>
+        }}
+    >
         {props.children}
     </Text>
 )

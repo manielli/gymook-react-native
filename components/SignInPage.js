@@ -29,12 +29,14 @@ export default class SignInPage extends React.Component {
             const {onSignIn = () => {}} = this.props;
 
             if (typeof data.id === "number") {
-                this.props.history.push("/");
                 onSignIn();
             } else {
                 this.setState({errors: [{message: "Wrong Email or Password"}]})
             }
-        });
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 
     render() {
