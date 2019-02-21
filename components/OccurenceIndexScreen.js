@@ -31,12 +31,12 @@ class OccurenceIndexScreen extends React.Component {
                 loading: false
             });
         }).catch((error) => {console.log(error)});
-        GymClass.all().then(gym_classes => {
-                this.setState({
-                    gymClasses: gym_classes
-                })
-            }
-        ).catch((error) => console.log(error));
+        // GymClass.all().then(gym_classes => {
+        //         this.setState({
+        //             gymClasses: gym_classes
+        //         })
+        //     }
+        // ).catch((error) => console.log(error));
     }
 
     componentWillUnmount() {
@@ -129,7 +129,7 @@ class OccurenceIndexScreen extends React.Component {
     renderItem(item) { 
         return(
             <TouchableOpacity onPress={() => this.setState({isModalVisible: true, occurenceId: item.id})} >
-                <View style={[styles.item, {height: item.height}]} >
+                <View style={[styles.item]} >
                     <OccurenceShowScreen occurenceId={item.id} />  
                 </View> 
             </TouchableOpacity>

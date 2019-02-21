@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { LinearGradient } from "expo";
 import Title from "./components/Title";
 import GymClassIndexScreen from "./components/GymClassIndexScreen";
@@ -8,8 +8,20 @@ import SignInPage from "./components/SignInPage";
 import { User } from './requests';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
+const AppNavigator = createStackNavigator(
+  {
+    Classes: OccurenceIndexScreen,
+    ClassTemplates: GymClassIndexScreen,
+    SignIn: SignInPage
+  },
+  {
+    initialRouteName: "Classes"
+  }
+);
 
-class App extends React.Component {
+const AppContainer = createAppContainer(AppNavigator);
+
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -56,26 +68,17 @@ class App extends React.Component {
         <LinearGradient 
           style={{
             flex: 1, 
-            alignItems: "center"
+            alignItems: "center",
+            justifyContent: "center"
           }} 
           colors={["white", "steelblue", "maroon"]} 
         >
           <Title>Gymook</Title>
+          {/* <SignInPage onSignIn={this.getCurrentUser} /> */}
           {/* <GymClassIndexScreen /> */}
           <OccurenceIndexScreen />
-          {/* <SignInPage onSignIn={this.getCurrentUser} /> */}
         </LinearGradient>
       </View>
     );
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-export default App;
+};

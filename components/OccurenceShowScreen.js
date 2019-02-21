@@ -46,8 +46,22 @@ class OccurenceShowScreen extends React.Component {
                         <Text>Loading...</Text>
                     ) : (
                         <>
-                            <Text style={{ fontSize: 15, marginBottom: 10 }} > This class is from {occurence.start_time.split(".000")[0].split("T")[1]} to {occurence.end_time.split(".000")[0].split("T")[1]} </Text>
-                            <Text style={{ fontSize: 15, fontWeight: "bold" }} > Coach {occurence.creator_coach.full_name} will be teachin this class. </Text>
+                            <Text style={{ 
+                                fontSize: 15, 
+                                marginBottom: 10 
+                                }}
+                            > 
+                                This class is from {occurence.start_time.split(".000")[0].split("T")[1]} 
+                                {" "}to {occurence.end_time.split(".000")[0].split("T")[1]} 
+                            </Text>
+
+                            <Text style={{ 
+                                fontSize: 15, 
+                                fontWeight: "bold" 
+                                }} 
+                            > 
+                                Coach {occurence.creator_coach.full_name} will be teachin this class. 
+                            </Text>
                         </>
                     )
                 }

@@ -49,20 +49,21 @@ class GymClassIndexScreen extends React.Component {
 
                     {gym_classes.map(gym_class => 
                         <View style={{
+                            justifyContent: "left",
                             marginVertical: 5,
                             marginHorizontal: 20,
                             paddingHorizontal: 15,
-                            paddingVertical: 7.5,
-                            borderColor: "gainsboro",
+                            paddingVertical: 7.5
+                            // borderColor: "gainsboro",
                             // borderWidth: 1,
-                            borderRadius: 5
+                            // borderRadius: 5
                         }} 
                         key={gym_class.id}
                         >
                         <TouchableOpacity onPress={() => this.setState({isModalVisible: true, gym_classId: gym_class.id}) } >
                             <Text style={{fontSize: 20}} >{gym_class.class_type}</Text>
                         </TouchableOpacity>
-                        <Text style={{fontSize: 15, color: "black"}} > {gym_class.creator_coach.full_name} </Text>
+                        <Text style={{fontSize: 15, fontWeight: "bold", color: "black"}} > {gym_class.creator_coach.full_name} </Text>
                         </View>    
                     )}
                 </ScrollView>

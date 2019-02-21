@@ -50,7 +50,7 @@ export const Occurence = {
         ).then(res => res.json());
     },
     create(params) {
-        return fetch(`${BASE_URL}/occurences`, {
+        return fetch(`${BASE_URL}/gym_classes/gym_class_id/occurences`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -61,7 +61,7 @@ export const Occurence = {
         ).then(res => res.json());
     },
     destroy(id) {
-        return fetch(`${BASE_URL}/occurences/${id}`, {
+        return fetch(`${BASE_URL}/gym_classes/gym_class_id/occurences/${id}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
@@ -86,7 +86,7 @@ export const Booking = {
         ).then(res => res.json());
     },
     create(params) {
-        return fetch(`${BASE_URL}/bookings`,{
+        return fetch(`${BASE_URL}/occurences/occurence_id/bookings`,{
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -97,7 +97,7 @@ export const Booking = {
         ).then(res => res.json());
     },
     destroy(id) {
-        return fetch(`${BASE_URL}/bookings/${id}`, {
+        return fetch(`${BASE_URL}/occurences/occurence_id/bookings/${id}`, {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
