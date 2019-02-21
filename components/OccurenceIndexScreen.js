@@ -1,6 +1,25 @@
 import React, {Component} from "react";
 import {Button,Modal,ScrollView,View,TouchableOpacity,Text} from "react-native";
 import OccurenceShowScreen from "./OccurenceShowScreen";
+import { Occurence} from "../requests";
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+
+const formatDate = (dateString) => dateString.split("T")[0]
+
+const formatOccurences = (occurences) => {
+    const outputObj = {};
+
+    occurences.forEach((occurence) => {
+        const startTime = formatDate(occurence.start_time)
+        if (outputObj[startTime]) {
+            outputObj[startTime].push(occurence)
+        } else {
+            outputObj[startTime] = [occurence]
+        }
+    })
+
+    return outputObj;
+} 
 
 class OccurenceIndexScreen extends React.Component {
     constructor(props) {
@@ -12,20 +31,22 @@ class OccurenceIndexScreen extends React.Component {
         }
     }
 
+
+
     componentDidMount() {
-        fetch("http://192.168.1.50:3000/api/v1/occurences")
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    occurences: data
-                });
+        Occurence.all().then(occurences => {
+            this.setState({
+                occurences: occurences,
+                formattedOccurences: formatOccurences(occurences)
             });
+        }).catch((error) => {console.log(error)});
+        
     }
 
     render() {
-        const {occurenceId, isModalVisible, occurences} = this.state;
+        const {occurenceId, isModalVisible, occurences, formattedOccurences} = this.state;
         return(
-            <ScrollView>
+            <ScrollView style={{width: "100%"}} >
                 <Modal animationType="fade" transparent visible={isModalVisible} >
                     <View style={{
                         flex: 1,
@@ -47,28 +68,73 @@ class OccurenceIndexScreen extends React.Component {
                         </View>
                     </View>
                 </Modal>
+                
+                {/* <CalendarList 
+                    style={{marginTop: 50, borderRadius: 20}} 
+                    minDate={Date()}
+                    pastScrollRange={1}
+                    futureScrollRange={1}
+                    showScrollIndicator={true}
+                    horizontal={true}
+                    theme={{
+                        backgroundColor: 'whitesmoke',
+                        calendarBackground: 'whitesmoke',
+                        monthTextColor: 'steelblue'
+                      }}
 
-                {occurences.map(occurence => 
-                    <View style={{
-                        marginVertical: 5,
-                        marginHorizontal: 20,
-                        paddingHorizontal: 15,
-                        paddingVertical: 7.5,
-                        borderColor: "maroon",
-                        borderWidth: 1,
-                        borderRadius: 5
-                        }}
-                        key={occurence.id} 
-                    >
-                        <TouchableOpacity onPress={() => this.setState({isModalVisible: true, occurenceId: occurence.id}) } >
-                            <Text style={{fontSize: 20}} > This class starting on</Text>
-                            <Text style={{fontSize: 20}} > {occurence.start_time} ending on {occurence.end_time} </Text>
-                            <Text style={{fontSize: 20}} > {occurence.bookings.count} peope have booked this class so far.</Text>
-                            {/* <Text style={{fontSize: 20}} > This class costs: ${occurence.gym_class.cost} </Text> */}
-                        </TouchableOpacity>
-                        <Text style={{fontSize: 15, color: "lightblue"}} > {occurence.creator_coach.full_name} </Text>
-                    </View>    
-                )}
+                    onDayPress={(day) => {console.log('selected day', day)}}
+                    onMonthChange={(month) => {console.log('month changed', month)}}
+                    markedDates={{
+                        '2019-02-26': {selected: true, marked: true, selectedColor: 'blue'},
+                        '2019-02-27': {marked: true},
+                        '2019-02-28': {marked: true, dotColor: 'red', activeOpacity: 0},
+                        '2019-02-29': {disabled: true, disableTouchEvent: true}
+                    }}
+
+                /> */}
+                <Agenda
+                    style={{borderRadius: 20, marginTop: 50, height: 800}} 
+                    
+                    minDate={Date()}
+                    
+                    pastScrollRange={1}
+                    
+                    futureScrollRange={1}
+                    
+                    selected={Date()}
+                    
+                    theme={{
+                        backgroundColor: 'whitesmoke',
+                        calendarBackground: 'whitesmoke',
+                        monthTextColor: 'steelblue'
+                    }}
+                                        
+                    items={
+                        formattedOccurences
+                    }
+                    
+                    renderItem={(item, firstItemInDay) => (item ? ( 
+                        <View style={{borderWidth: 1, borderColor: "steelblue", borderLeftWidth: 0, borderRightWidth: 0 }} >
+                            <OccurenceShowScreen occurenceId={item.id} />  
+                        </View> 
+                        ) : null )
+                    }
+                    
+                    renderDay={(day, item) => (
+                        <View style={{margin: 20}} >
+                            { day ? <Text>{day.day}</Text> : null }
+                        </View> 
+                    )}
+                    
+                    renderEmptyDate={() => {return (<View />);}}
+                    
+                    renderEmptyData = {() => {return (<View />);}}
+                    
+                    onRefresh={() => console.log('refreshing...')}
+                    
+                    rowHasChanged={(r1, r2) => {return r1.text !== r2.text}}
+                />
+
             </ScrollView>
         );
     }

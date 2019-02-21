@@ -27,6 +27,7 @@ export default class SignInPage extends React.Component {
             password: password
         }).then(data => {
             const {onSignIn = () => {}} = this.props;
+            console.log(data.id);
 
             if (typeof data.id === "number") {
                 onSignIn();

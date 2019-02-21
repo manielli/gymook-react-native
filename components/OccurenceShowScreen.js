@@ -12,17 +12,25 @@ class OccurenceShowScreen extends React.Component {
     }
 
     fetchOccurence(id) {
+        this.setState({loading: true, mounted: true});
+
         fetch(`http://192.168.1.50:3000/api/v1/occurences/${this.props.occurenceId}`)
             .then(res => res.json())
             .then(occurence => {
-                console.log(occurence);
-                this.setState({occurence: occurence, loading: false});
+                if ( this.mounted ) {
+                    this.setState({occurence: occurence, loading: false});
+                }
             })
                 
     }
 
     componentDidMount() {
+        this.mounted = true;
         this.fetchOccurence(this.props.occurenceId);
+    }
+
+    componentWillUnmount() {
+        this.mounted = null;
     }
 
     componentDidUpdate(prevProps) {
@@ -33,7 +41,7 @@ class OccurenceShowScreen extends React.Component {
 
     render() {
         const {occurence, loading} = this.state;
-        console.log(this.state);
+
         return (
             <ScrollView>
                 { 
@@ -41,9 +49,9 @@ class OccurenceShowScreen extends React.Component {
                         <Text>Loading...</Text>
                     ) : (
                         <>
-                            <Text style={{ fontSize: 30, marginBottom: 10 }} > This class starts at: {occurence.start_time}</Text>
-                            <Text style={{ fontSize: 30, marginBottom: 10 }} > ends at: {occurence.end_time} </Text>
-                            <Text style={{ fontSize: 30, fontWeight: "bold" }} > Coach {occurence.creator_coach.full_name} will be teachin this class. </Text>
+                            <Text style={{ fontSize: 15, marginBottom: 10 }} > This class starts at: {occurence.start_time.split(".000")[0].split("T")[1]}</Text>
+                            <Text style={{ fontSize: 15, marginBottom: 10 }} > ends at: {occurence.end_time.split(".000")[0].split("T")[1]} </Text>
+                            <Text style={{ fontSize: 15, fontWeight: "bold" }} > Coach {occurence.creator_coach.full_name} will be teachin this class. </Text>
                         </>
                     )
                 }

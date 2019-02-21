@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Modal, ScrollView, View, TouchableOpacity, Text } from "react-native";
 import GymClassShowScreen from "./GymClassShowScreen";
+import {GymClass} from "../requests";
 
 class GymClassIndexScreen extends React.Component {
     constructor(props) {
@@ -13,13 +14,11 @@ class GymClassIndexScreen extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://192.168.1.50:3000/api/v1/gym_classes")
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    gym_classes: data
-                });
-            });
+        GymClass.all().then(gym_classes => {
+            this.setState({
+                gym_classes: gym_classes
+            })
+        }).catch((error) => {console.log(error)});
     }
 
     render() {
@@ -31,7 +30,7 @@ class GymClassIndexScreen extends React.Component {
                             flex: 1,
                             backgroundColor: "rgba(0,0,0,0.2)",
                             alignItems: "center",
-                            justifyContent: "center",
+                            justifyContent: "left",
                             paddingHorizontal: 50,
                             paddingVertical: 150
                         }} >
@@ -55,7 +54,7 @@ class GymClassIndexScreen extends React.Component {
                             paddingHorizontal: 15,
                             paddingVertical: 7.5,
                             borderColor: "gainsboro",
-                            borderWidth: 1,
+                            // borderWidth: 1,
                             borderRadius: 5
                         }} 
                         key={gym_class.id}
@@ -63,7 +62,7 @@ class GymClassIndexScreen extends React.Component {
                         <TouchableOpacity onPress={() => this.setState({isModalVisible: true, gym_classId: gym_class.id}) } >
                             <Text style={{fontSize: 20}} >{gym_class.class_type}</Text>
                         </TouchableOpacity>
-                        <Text style={{fontSize: 15, color: "lightblue"}} > {gym_class.creator_coach.full_name} </Text>
+                        <Text style={{fontSize: 15, color: "black"}} > {gym_class.creator_coach.full_name} </Text>
                         </View>    
                     )}
                 </ScrollView>
