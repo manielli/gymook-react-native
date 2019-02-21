@@ -6,9 +6,10 @@ import GymClassIndexScreen from "./components/GymClassIndexScreen";
 import OccurenceIndexScreen from "./components/OccurenceIndexScreen";
 import SignInPage from "./components/SignInPage";
 import { User } from './requests';
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,3 +77,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;

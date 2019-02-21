@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {ScrollView, View, Text, Button} from "react-native";
+import { Occurence } from "../requests";
 
 class OccurenceShowScreen extends React.Component {
     constructor(props) {
@@ -14,13 +15,9 @@ class OccurenceShowScreen extends React.Component {
     fetchOccurence(id) {
         this.setState({loading: true, mounted: true});
 
-        fetch(`http://192.168.1.50:3000/api/v1/occurences/${this.props.occurenceId}`)
-            .then(res => res.json())
-            .then(occurence => {
-                if ( this.mounted ) {
-                    this.setState({occurence: occurence, loading: false});
-                }
-            })
+        Occurence.one(id).then(occurence => {
+            this.setState({occurence, loading: false});
+        }).catch((error) => {console.log(error);});
                 
     }
 
@@ -49,8 +46,7 @@ class OccurenceShowScreen extends React.Component {
                         <Text>Loading...</Text>
                     ) : (
                         <>
-                            <Text style={{ fontSize: 15, marginBottom: 10 }} > This class starts at: {occurence.start_time.split(".000")[0].split("T")[1]}</Text>
-                            <Text style={{ fontSize: 15, marginBottom: 10 }} > ends at: {occurence.end_time.split(".000")[0].split("T")[1]} </Text>
+                            <Text style={{ fontSize: 15, marginBottom: 10 }} > This class is from {occurence.start_time.split(".000")[0].split("T")[1]} to {occurence.end_time.split(".000")[0].split("T")[1]} </Text>
                             <Text style={{ fontSize: 15, fontWeight: "bold" }} > Coach {occurence.creator_coach.full_name} will be teachin this class. </Text>
                         </>
                     )

@@ -2,7 +2,7 @@ import React, {Component}  from "react";
 import {Session} from "../requests";
 import {View, Button, TextInput, StyleSheet} from "react-native";
 
-export default class SignInPage extends React.Component {
+class SignInPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -92,3 +92,5 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     }
 });
+
+export default SignInPage;

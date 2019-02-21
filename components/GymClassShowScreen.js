@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ScrollView, View, Text, Button } from "react-native";
+import { GymClass } from "../requests";
 
 class GymClassShowScreen extends React.Component {
     constructor(props) {
@@ -12,9 +13,9 @@ class GymClassShowScreen extends React.Component {
     }
 
     fetchGymClass(id) {
-        fetch(`http://192.168.1.50:3000/api/v1/gym_classes/${this.props.gym_classId}`)
-            .then(res => res.json())
-            .then(gym_class => this.setState({gym_class, loading: false}))
+        GymClass.one(id).then(gym_class => {
+            this.setState({gym_class, loading: true})
+        }).catch((error) => {console.log(error)});
     }
 
     componentDidMount() {
