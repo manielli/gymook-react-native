@@ -23,13 +23,16 @@ class OccurenceIndexScreen extends React.Component {
     
     
     componentDidMount() {
-        this.setState({mounted: true, loading: true});
+        this.mounted = true;
+        this.setState({loading: true});
         Occurence.all().then(occurences => {
-            this.setState({
-                occurences: occurences,
-                formattedOccurences: formatOccurences(occurences),
-                loading: false
-            });
+            if (this.mounted) {
+                this.setState({
+                    occurences: occurences,
+                    formattedOccurences: formatOccurences(occurences),
+                    loading: false
+                });
+            }
         }).catch((error) => {console.log(error)});
         // GymClass.all().then(gym_classes => {
         //         this.setState({
@@ -168,7 +171,7 @@ const formatDate = (dateString) => dateString.split("T")[0]
 
 const formatOccurences = (occurences) => {
     const outputObj = {};
-
+    
     occurences.forEach((occurence) => {
         const startTime = formatDate(occurence.start_time)
         if (outputObj[startTime]) {
