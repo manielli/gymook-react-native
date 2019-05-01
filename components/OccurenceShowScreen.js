@@ -45,7 +45,7 @@ class OccurenceShowScreen extends React.Component {
                     loading || !occurence ? (
                         <Text>Loading...</Text>
                     ) : (
-                        <>
+                        <View>
                             <Text style={{ 
                                 fontSize: 15, 
                                 marginBottom: 10 
@@ -62,7 +62,7 @@ class OccurenceShowScreen extends React.Component {
                             > 
                                 Coach {occurence.creator_coach.full_name} will be teachin this class. 
                             </Text>
-                        </>
+                        </View>
                     )
                 }
             </ScrollView>
