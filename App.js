@@ -1,84 +1,74 @@
-import React from 'react';
-import { Button, Text, View } from 'react-native';
-import { LinearGradient } from "expo";
-import Title from "./components/Title";
+import React from "react";
+// import { View } from "react-native";
+// import { LinearGradient } from "expo";
+// import Title from "./components/Title";
 import GymClassIndexScreen from "./components/GymClassIndexScreen";
 import OccurenceIndexScreen from "./components/OccurenceIndexScreen";
 import SignInPage from "./components/SignInPage";
-import { User } from './requests';
-import { createStackNavigator, createAppContainer } from "react-navigation";
+// import { User } from './requests';
+import { 
+  createBottomTabNavigator, 
+  createAppContainer 
+} from "react-navigation";
+import Initializing from "./components/Initializing";
 
-const AppNavigator = createStackNavigator(
+const AppNavigator = createBottomTabNavigator(
   {
-    Classes: OccurenceIndexScreen,
-    ClassTemplates: GymClassIndexScreen,
-    SignIn: SignInPage
+    Initializing: { screen: Initializing },
+    Classes: { screen: OccurenceIndexScreen },
+    ClassTemplates: { screen: GymClassIndexScreen },
+    SignIn: { screen: SignInPage },
   },
   {
-    initialRouteName: "Classes"
+    initialRouteName: "Classes",
+    defaultNavigationOptions: {
+      tabBarVisible: false
+    }
   }
 );
 
 const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: null,
-      loading: true
-    }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     currentUser: null
+  //   }
 
-    this.getCurrentUser = this.getCurrentUser.bind(this);
-    this.destroySession = this.destroySession.bind(this);
-  }
+    // this.getCurrentUser = this.getCurrentUser.bind(this);
+    // this.destroySession = this.destroySession.bind(this);
+  // }
 
+  // destroySession() {
+  //   this.setState({
+  //     currentUser: null
+  //   });
 
+  //   Session.destroy();
+  // }
 
-  destroySession() {
-    this.setState({
-      currentUser: null
-    });
+  // getCurrentUser() {
+  //   User
+  //     .current()
+  //     .then(data => {
+  //       const {current_user: currentUser} = data;
+  //       if (currentUser) {
+  //         this.setState({currentUser});
+  //       }
+  //       this.setState({loading: false});
+  //       }
+  //     );
+  // }
 
-    Session.destroy();
-  }
-
-  getCurrentUser() {
-    User
-      .current()
-      .then(data => {
-        const {current_user: currentUser} = data;
-        if (currentUser) {
-          this.setState({currentUser});
-        }
-        this.setState({loading: false});
-        }
-      );
-  }
-
-  componentDidMount() {
-    this.getCurrentUser;
-  }
+  // componentDidMount() {
+  //   this.getCurrentUser;
+  // }
 
   render() {
-    const {currentUser, loading} = this.state;
     return (
-
-      <View style={{flex: 1}} >
-        <LinearGradient 
-          style={{
-            flex: 1, 
-            alignItems: "center",
-            justifyContent: "center"
-          }} 
-          colors={["white", "steelblue", "maroon"]} 
-        >
-          <Title>Gymook</Title>
-          {/* <SignInPage onSignIn={this.getCurrentUser} /> */}
-          {/* <GymClassIndexScreen /> */}
-          <OccurenceIndexScreen />
-        </LinearGradient>
-      </View>
+      <AppContainer />
+      // <SignInPage onSignIn={this.getCurrentUser} />
     );
   }
 };

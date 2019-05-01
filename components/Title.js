@@ -2,11 +2,10 @@ import React from "react";
 import { Text } from "react-native";
 
 const Title = props => (
-    <Text style={{
-        marginTop: 50, 
+    <Text style={{ 
         fontSize: 40, 
-        color: "steelblue", 
-        fontWeight: "bold"
+        color: "maroon", 
+        fontWeight: "bold",
         }}
     >
         {props.children}

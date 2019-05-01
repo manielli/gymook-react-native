@@ -1,10 +1,19 @@
 import React, {Component} from "react";
-import {StyleSheet,Button,Modal,ScrollView,View,TouchableOpacity,Text} from "react-native";
+import {
+    StyleSheet, 
+    Button, 
+    Modal, 
+    ScrollView, 
+    View, 
+    TouchableOpacity, 
+    Text
+} from "react-native";
 import OccurenceShowScreen from "./OccurenceShowScreen";
-import { Occurence, GymClass} from "../requests";
+import { Occurence, GymClass } from "../requests";
 import { Agenda } from 'react-native-calendars';
 import Title from "./Title";
 import BookingShowScreen from "./BookingShowScreen";
+import Initializing from "./Initializing";
 
 
 class OccurenceIndexScreen extends React.Component {
@@ -26,6 +35,7 @@ class OccurenceIndexScreen extends React.Component {
         this.mounted = true;
         this.setState({loading: true});
         Occurence.all().then(occurences => {
+            console.log(occurences);
             if (this.mounted) {
                 this.setState({
                     occurences: occurences,
@@ -49,35 +59,14 @@ class OccurenceIndexScreen extends React.Component {
     render() {
         const {occurenceId, isModalVisible, occurences, formattedOccurences, loading, bookingModalVisible} = this.state;
         return (
-            <ScrollView style={{padding: 10, width: "100%"}} >
+            <>
                 {
                     loading ? (
-                        <Title>Loading...</Title>
+                        <Initializing />
                         ) : (
-                            <>
-                            <Modal animationType="fade" transparent visible={isModalVisible} >
-                                <View style={{
-                                    flex: 1,
-                                    backgroundColor: "rgba(0,0,0,0.1)",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    paddingHorizontal: 50,
-                                    paddingVertical: 150
-                                }} >
-                                    <View style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        backgroundColor: "whitesmoke",
-                                        padding: 25,
-                                        borderRadius: 15
-                                    }} >
-                                        <OccurenceShowScreen occurenceId={occurenceId} />
-                                        <Button onPress={() => this.setState({isModalVisible: false}) } title="Close" />
-                                        <Button onPress={() => this.setState({bookingModalVisible: true})} title="Book" />
-                                    </View>
-                                </View>
-                            </Modal>
-                            <Modal animationType="fade" transparent visible={bookingModalVisible} >
+                            
+                            <ScrollView style={{padding: 10, width: "100%"}} >
+                                <Modal animationType="fade" transparent visible={isModalVisible} >
                                     <View style={{
                                         flex: 1,
                                         backgroundColor: "rgba(0,0,0,0.1)",
@@ -93,39 +82,62 @@ class OccurenceIndexScreen extends React.Component {
                                             padding: 25,
                                             borderRadius: 15
                                         }} >
-                                            <BookingShowScreen occurenceId={occurenceId} />
-                                            <Button onPress={() => this.setState({bookingModalVisible: false}) } title="Close" />
+                                            <OccurenceShowScreen occurenceId={occurenceId} />
+                                            <Button onPress={() => this.setState({isModalVisible: false}) } title="Close" />
+                                            <Button onPress={() => this.setState({bookingModalVisible: true})} title="Book" />
                                         </View>
                                     </View>
-                            </Modal>
-                            <Agenda
-                                style={{borderRadius: 20, marginTop: 50, height: 600, backgroundColor: "whitesmoke"}} 
-                                
-                                minDate={Date()}
-                                
-                                pastScrollRange={1}
-                                
-                                futureScrollRange={1}
-                                
-                                selected={Date()}
-                                
-                                theme={{
-                                    backgroundColor: 'whitesmoke',
-                                    calendarBackground: 'whitesmoke',
-                                    monthTextColor: 'steelblue'
-                                }}
-                                
-                                items={formattedOccurences}
-                                
-                                renderItem={this.renderItem.bind(this)}
-                                renderDay={this.renderDay.bind(this)}
-                                renderEmptyDate={this.renderEmptyDate.bind(this)}
-                                rowHasChanged={this.rowHasChanged.bind(this)}                    
-                            />
-                        </>
-                    )
-                }
-            </ScrollView>
+                                </Modal>
+                                <Modal animationType="fade" transparent visible={bookingModalVisible} >
+                                        <View style={{
+                                            flex: 1,
+                                            backgroundColor: "rgba(0,0,0,0.1)",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            paddingHorizontal: 50,
+                                            paddingVertical: 150
+                                        }} >
+                                            <View style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                backgroundColor: "whitesmoke",
+                                                padding: 25,
+                                                borderRadius: 15
+                                            }} >
+                                                <BookingShowScreen occurenceId={occurenceId} />
+                                                <Button onPress={() => this.setState({bookingModalVisible: false}) } title="Close" />
+                                            </View>
+                                        </View>
+                                </Modal>
+                                <Agenda
+                                    style={{borderRadius: 20, marginTop: 50, height: 600, backgroundColor: "whitesmoke"}} 
+                                    
+                                    minDate={Date()}
+                                    
+                                    pastScrollRange={1}
+                                    
+                                    futureScrollRange={1}
+                                    
+                                    selected={Date()}
+                                    
+                                    theme={{
+                                        backgroundColor: 'whitesmoke',
+                                        calendarBackground: 'whitesmoke',
+                                        monthTextColor: 'steelblue'
+                                    }}
+                                    
+                                    items={formattedOccurences}
+                                    
+                                    renderItem={this.renderItem.bind(this)}
+                                    renderDay={this.renderDay.bind(this)}
+                                    renderEmptyDate={this.renderEmptyDate.bind(this)}
+                                    rowHasChanged={this.rowHasChanged.bind(this)}                    
+                                />
+                            </ScrollView>
+                            
+                        )
+                    }
+            </>
         );
     }
     
