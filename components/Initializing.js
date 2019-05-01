@@ -42,7 +42,7 @@ export default class Initializing extends React.Component {
             <View style={{flex: 1}} >
                 <LinearGradient 
                     style={styles.container} 
-                    colors={["white", "steelblue", "maroon"]} 
+                    colors={["steelblue", "white", "maroon"]} 
                 >
                     <Title>Gymook</Title>
                     <ActivityIndicator size="large" />
