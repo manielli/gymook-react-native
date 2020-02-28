@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { LinearGradient } from 'expo';
 import OccurenceShowScreen from "./OccurenceShowScreen";
-import { Occurence, GymClass } from "../requests";
+import { Occurence } from "../requests";
 import { Agenda } from 'react-native-calendars';
 import BookingShowScreen from "./BookingShowScreen";
 import Initializing from "./Initializing";
@@ -28,27 +28,19 @@ class OccurenceIndexScreen extends React.Component {
         }
     }
     
-    
-    
     componentDidMount() {
         this.mounted = true;
         this.setState({loading: true});
         Occurence.all().then(occurences => {
-            console.log(occurences);
+            // console.log(formatOccurences(occurences));
             if (this.mounted) {
                 this.setState({
-                    occurences: occurences,
+                    // occurences: occurences,
                     formattedOccurences: formatOccurences(occurences),
                     loading: false
                 });
             }
         }).catch((error) => {console.log(error)});
-        // GymClass.all().then(gym_classes => {
-        //         this.setState({
-        //             gymClasses: gym_classes
-        //         })
-        //     }
-        // ).catch((error) => console.log(error));
     }
 
     componentWillUnmount() {
@@ -91,27 +83,6 @@ class OccurenceIndexScreen extends React.Component {
                                             </View>
                                         </View>
                                     </Modal>
-                                    <Modal animationType="fade" transparent visible={bookingModalVisible} >
-                                            <View style={{
-                                                flex: 1,
-                                                backgroundColor: "rgba(0,0,0,0.1)",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                paddingHorizontal: 50,
-                                                paddingVertical: 150
-                                            }} >
-                                                <View style={{
-                                                    width: "100%",
-                                                    height: "100%",
-                                                    backgroundColor: "whitesmoke",
-                                                    padding: 25,
-                                                    borderRadius: 15
-                                                }} >
-                                                    <BookingShowScreen occurenceId={occurenceId} />
-                                                    <Button onPress={() => this.setState({bookingModalVisible: false}) } title="Close" />
-                                                </View>
-                                            </View>
-                                    </Modal>
                                     <Agenda
                                         style={{borderRadius: 20, marginTop: 50, height: 600, backgroundColor: "whitesmoke"}} 
                                         
@@ -131,10 +102,10 @@ class OccurenceIndexScreen extends React.Component {
                                         
                                         items={formattedOccurences}
                                         
-                                        renderItem={this.renderItem.bind(this)}
-                                        renderDay={this.renderDay.bind(this)}
-                                        renderEmptyDate={this.renderEmptyDate.bind(this)}
-                                        rowHasChanged={this.rowHasChanged.bind(this)}                    
+                                        renderItem={this.renderItem}
+                                        renderDay={this.renderDay}
+                                        renderEmptyDate={this.renderEmptyDate}
+                                        rowHasChanged={this.rowHasChanged}                    
                                     />
                                 </LinearGradient>
                             </View>
@@ -145,7 +116,7 @@ class OccurenceIndexScreen extends React.Component {
         );
     }
     
-    renderItem(item) { 
+    renderItem = (item) => { 
         return(
             <TouchableOpacity onPress={() => this.setState({isModalVisible: true, occurenceId: item.id})} >
                 <View style={[styles.item]} >
@@ -155,7 +126,7 @@ class OccurenceIndexScreen extends React.Component {
         )
     }
 
-    renderDay(day) {
+    renderDay = (day) => {
         return( day ? (
             <TouchableOpacity>
                 <View style={{margin: 20, borderRadius: "35px", backgroundColor: "lightblue"}} >    
@@ -166,13 +137,13 @@ class OccurenceIndexScreen extends React.Component {
             )
         }
         
-    renderEmptyDate() {
+    renderEmptyDate = () => {
         return (
             <View style={styles.emptyDate}><Text>This is empty date!</Text></View>
         );
     }
     
-    rowHasChanged(r1, r2) {
+    rowHasChanged = (r1, r2) => {
         return r1.name !== r2.name;
     }
     
